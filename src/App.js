@@ -1,5 +1,5 @@
 import './App.css';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { ethers } from 'ethers';
 import Greeter from './artifacts/contracts/Greeter.sol/Greeter.json';
 import Token from './artifacts/contracts/Token.sol/Token.json' ;
@@ -7,11 +7,18 @@ import { getJsonWalletAddress } from '@ethersproject/json-wallets';
 import TestContract from './artifacts/contracts/TestContract.sol/TestContract.json' ;
 
 const greeterAddress = "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707";
-const tokenAddress = "0x0165878A594ca255338adfa4d48449f69242Eb8F";
-const testContractAddress = "0xa513E6E4b8f2a923D98304ec87F64353C4D5C853";
+const tokenAddress = "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512";
+const testContractAddress = "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0";
+
 
 
 function App() {
+  
+  // store data in local state
+  const [totalSupply, setTotalSupply] = useState('')
+  const [owner, setOwner] = useState('')
+  const [tokenName, setTokenName] = useState('')
+
   // store greeting in local state
   const [greeting, setGreetingValue] = useState()
   const [userAccount, setUserAccount] = useState()
@@ -29,13 +36,18 @@ function App() {
       const contract = new ethers.Contract(testContractAddress, TestContract.abi, provider)
       console.log({contract})
       try {
-        const data = await contract.getTotalSupply();
+        const data = await contract.getTotalSupply();  
         console.log('data: ', data)
-      } catch (err) {
+        setTotalSupply(data)
+      } catch (err) {      
         console.log("Error: ", err)
+        return err
       }
     }
   }
+
+
+
 
   async function getOwner(){
     if (typeof window.ethereum !== 'undefined') {
@@ -44,9 +56,10 @@ function App() {
       const contract = new ethers.Contract(testContractAddress, TestContract.abi, provider)
       console.log({contract})
       try {
-        const data = await contract.getOwner();
+        const data = await contract.getOwner();      
         console.log('data: ', data)
-      } catch (err) {
+        setOwner(data)
+      } catch (err) {       
         console.log("Error: ", err)
       }
     }
@@ -60,8 +73,11 @@ function App() {
       try {
         const data = await contract.getTokenName();
         console.log('data: ', data)
+        setTokenName(data)
+
       } catch (err) {
         console.log("Error: ", err)
+        return err
       }
     }
   }
@@ -120,14 +136,23 @@ function App() {
 
 
 
+
  
+
+
+
 
   return (
     <div className="App">
       <header className="App-header">
         <button onClick={getTotalSupply}>Get Total Supply</button>
+        <p>{totalSupply}</p>
+ 
         <button onClick={getOwner}>Get Owner</button>
+        <p>{owner}</p>
         <button onClick={getTokenName}>Get Token Name</button>
+        <p>{tokenName}</p>
+        
         
 
 
