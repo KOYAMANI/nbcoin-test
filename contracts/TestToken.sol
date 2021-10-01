@@ -2,7 +2,23 @@
 
 pragma solidity ^0.8.4;
 
+import "hardhat/console.sol";
+
 contract TestToken {
+    //here in the constructor, notice how you can choose your
+    //own name_ and symbol_, and once you set it, it will automatically
+    //change the _name to whatever you put for name_ and _symbol to
+    //whatever you put for symbol_.
+    constructor(string memory name_, string memory symbol_) {
+        name_ = _name;
+        symbol_ = _symbol;
+        // 300000 * 10 ** 18 wei = 300000 tokens
+        _totalSupply = 300000 * 10**18;
+        _decimals = 18;
+
+        mint(msg.sender, _totalSupply);
+    }
+
     //checks the token balance of an address (in wei)
     mapping(address => uint256) private _balances;
 
@@ -60,19 +76,5 @@ contract TestToken {
     function mint(address to, uint256 amount) public returns (bool) {
         _mint(to, amount);
         return true;
-    }
-
-    //here in the constructor, notice how you can choose your
-    //own name_ and symbol_, and once you set it, it will automatically
-    //change the _name to whatever you put for name_ and _symbol to
-    //whatever you put for symbol_.
-    constructor(string memory name_, string memory symbol_) {
-        name_ = _name;
-        symbol_ = _symbol;
-        // 300000 * 10 ** 18 wei = 300000 tokens
-        _totalSupply = 300000 * 10**18;
-        _decimals = 18;
-
-        mint(msg.sender, _totalSupply);
     }
 }
