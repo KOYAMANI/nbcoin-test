@@ -77,4 +77,8 @@ abstract contract AccessControl is Context {
         require(_newBurner != address(0));
         burner = _newBurner;
     }
+
+    function getBurner() public view returns (address) {
+        return burner;
+    }
 }
