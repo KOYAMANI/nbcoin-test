@@ -26,11 +26,11 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
       // chainId: 1337
     },
     bscTest: {
-      url: "https://data-seed-prebsc-1-s1.binance.org:8545",
+      url: "https://data-seed-prebsc-2-s1.binance.org:8545",
       chainId: 97,
       gasPrice: 20000000000,
       //***private key MUST NOT be exposed, ONLY FOR TESTING PURPOSE***
-      accounts: [`ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80`]
+      accounts: [`2316c6b10e614351c9948c375769e4322b331edd84539d92f44e638a497b1ae3`]
     },
     genache: {
       url: "http://127.0.0.1:7545",
